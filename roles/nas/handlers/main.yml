@@ -1,0 +1,5 @@
+- name: Remount photos.
+  ansible.builtin.systemd:
+    name: media-photos.mount
+    state: restarted
+    daemon_reload: true

@@ -1,0 +1,38 @@
+- name: Install cifs-utils.
+  ansible.builtin.package:
+    name: cifs-utils
+    state: present
+
+- name: Create credentials dir.
+  ansible.builtin.file:
+    path: /etc/samba/credentials
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: Generate credentials file.
+  ansible.builtin.template:
+    src: credentials
+    dest: /etc/samba/credentials/photos
+    owner: root
+    group: root
+    mode: "0600"
+  notify: Remount photos.
+
+- name: Generate systemd mount.
+  ansible.builtin.template:
+    src: photos.mount
+    dest: /etc/systemd/system/media-photos.mount
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Remount photos.
+  register: photos_mount
+
+- name: Mount photos.
+  ansible.builtin.systemd:
+    name: media-photos.mount
+    state: started
+    daemon_reload: "{{ photos_mount.changed }}"
+    enabled: true

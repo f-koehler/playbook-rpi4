@@ -1,0 +1,12 @@
+[Unit]
+Description=Mount photos folder
+
+[Mount]
+What=//100.127.233.63/Photos
+Where=/media/photos
+Options=_netdev,credentials=/etc/samba/credentials/photos,iocharset=utf8,rw
+Type=cifs
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target

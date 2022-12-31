@@ -1,0 +1,9 @@
+- name: Setup raspberry pi.
+  hosts: all
+  become: true
+  vars_files: secrets.yml
+  roles:
+    - timezone
+    - docker
+    - nas
+    - photoprism
