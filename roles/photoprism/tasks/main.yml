@@ -14,7 +14,7 @@
 - name: Create DB container.
   community.docker.docker_container:
     name: photoprism_db
-    image: "mariadb:10.10.2"
+    image: "mariadb:10.10.3"
     pull: true
     restart_policy: unless-stopped
     security_opts:
